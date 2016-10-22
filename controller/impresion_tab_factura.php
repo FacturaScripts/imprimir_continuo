@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of FacturaSctipts
- * Copyright (C) 2013-2015  Carlos Garcia Gomez  neorazorx@gmail.com
+ * Copyright (C) 2013-2016  Carlos Garcia Gomez  neorazorx@gmail.com
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -51,7 +51,7 @@ class impresion_tab_factura extends fs_controller
    
    public function __construct()
    {
-      parent::__construct(__CLASS__, 'sat', 'sat', FALSE, FALSE);
+      parent::__construct(__CLASS__, 'Imprimir continuo', 'ventas', FALSE, FALSE);
    }
    
    protected function private_core()
@@ -150,26 +150,12 @@ class impresion_tab_factura extends fs_controller
    
    private function share_extensions()
    {
-      /// eliminamos la extensión anterior
-      foreach($this->extensions as $ext)
-      {
-         if($ext->name == 'tab_impresion')
-         {
-            $ext->delete();
-            break;
-         }
-      }
-      
       $fsext = new fs_extension();
       $fsext->name = 'btn_imprimir_continuo';
       $fsext->from = __CLASS__;
       $fsext->to = 'ventas_factura';
       $fsext->type = 'pdf';
-      $fsext->text = 'Papel continuo';
+      $fsext->text = '<span class="glyphicon glyphicon-print"></span>&nbsp; Papel continuo';
       $fsext->save();
    }
 }
-
-
-	
-	
