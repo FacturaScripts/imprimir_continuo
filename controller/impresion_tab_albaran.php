@@ -42,7 +42,7 @@ class impresion_tab_albaran extends fs_controller
       
       $this->share_extensions();
       
-      $this->ppage = $this->page->get('ventas_facturas');
+      $this->ppage = $this->page->get('ventas_albaran');
       $this->cliente = FALSE;
       $this->divisa = new divisa();
       $albaran = new albaran_cliente();
