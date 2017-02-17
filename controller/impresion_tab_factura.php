@@ -31,6 +31,8 @@ require_model('partida.php');
 require_model('serie.php');
 require_model('subcuenta.php');
 require_model('modelonumero.php');
+require_model('articulo_traza.php');
+
 
 class impresion_tab_factura extends fs_controller
 {
@@ -48,6 +50,7 @@ class impresion_tab_factura extends fs_controller
    public $rectificativa;
    public $serie;
    public $modelonumero;
+   private $articulo_traza;
    
    public function __construct()
    {
@@ -75,6 +78,7 @@ class impresion_tab_factura extends fs_controller
       $this->rectificada = FALSE;
       $this->rectificativa = FALSE;
       $this->serie = new serie();
+      $this->articulo_traza = new articulo_traza();
       
       if( isset($_GET['id']) )
       {
@@ -109,7 +113,31 @@ class impresion_tab_factura extends fs_controller
       else
          $this->new_error_msg("¡Factura de cliente no encontrada!");
    }
-   
+
+   public function generar_trazabilidad($linea)
+   {
+      $lineast = array();
+
+         $lineast = $this->articulo_traza->all_from_linea('idlfacventa', $linea);
+      
+      
+      $txt = '';
+      foreach($lineast as $lt)
+      {
+         $txt .= "\n";
+         if($lt->numserie)
+         {
+            $txt .= 'N/S: '.$lt->numserie.' ';
+         }
+         
+         if($lt->lote)
+         {
+            $txt .= 'Lote: '.$lt->lote;
+         }
+      }
+      
+      return $txt;
+   }
    public function url()
    {
       if( !isset($this->factura) )

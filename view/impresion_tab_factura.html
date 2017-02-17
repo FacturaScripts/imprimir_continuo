@@ -52,7 +52,7 @@
    </thead>
    {loop="$fsc->factura->get_lineas()"}
    <tr>
-      <td>{$value->descripcion}</td>
+      <td>x{$value->descripcion} {$fsc->generar_trazabilidad($value->idlinea)}</td>
       <td class="text-right">{$fsc->show_numero($value->cantidad)}</td>
       <td class="text-right">{$fsc->show_numero($value->pvpunitario)}</td>
       <td class="text-right">
