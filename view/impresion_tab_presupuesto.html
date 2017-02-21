@@ -1,6 +1,6 @@
 {include="header2"}
 
-{if="$fsc->albaran"}
+{if="$fsc->presupuesto"}
 <script type="text/javascript">
    $(document).ready(function() {
       window.print();
@@ -11,14 +11,14 @@
 <div class="containter-fluid">
    <div class="row">
       <div class="col-xs-6">
-         <h4><b>Albaran: </b>{$fsc->albaran->codigo}</h4>
-         <h4><b>Fecha: </b>{$fsc->albaran->fecha}</h4>
-         <h4><b>Cliente:</b></h4>         
-         {$fsc->albaran->nombrecliente}<br/>
-         {#FS_CIFNIF#}: {$fsc->albaran->cifnif}<br/>
-         {$fsc->albaran->direccion}
-         {if="$fsc->albaran->codpostal"}CP: {$fsc->albaran->codpostal}{/if}
-         {$fsc->albaran->ciudad}, {$fsc->albaran->provincia}
+         <h4><b>Presupuesto: </b>{$fsc->presupuesto->codigo}</h4>
+         <h4><b>Fecha: </b>{$fsc->presupuesto->fecha}</h4>
+         <h4><b>Cliente:</b></h4>
+         {$fsc->presupuesto->nombrecliente}<br/>
+         {#FS_CIFNIF#}: {$fsc->presupuesto->cifnif}<br/>
+         {$fsc->presupuesto->direccion}
+         {if="$fsc->presupuesto->codpostal"}CP: {$fsc->presupuesto->codpostal}{/if}
+         {$fsc->presupuesto->ciudad}, {$fsc->presupuesto->provincia}
       </div>
       <div class="col-xs-6 text-right">
          <h4>{$fsc->empresa->nombre}</h4>
@@ -46,24 +46,25 @@
          <th class="text-right">Importe</th>
       </tr>
    </thead>
-   {loop="$fsc->albaran->get_lineas()"}
+   {loop="$fsc->presupuesto->get_lineas()"}
    <tr>
       <td>{$value->referencia}&nbsp;{$value->descripcion}</td>
       <td class="text-right">{$fsc->show_numero($value->cantidad)}</td>
-      <td class="text-right">{$fsc->show_precio($value->pvpunitario, $fsc->albaran->coddivisa)}</td>
+      <td class="text-right">{$fsc->show_precio($value->pvpunitario, $fsc->presupuesto->coddivisa)}</td>
       <td class="text-right">
          {if="$value->dtopor!=0"}{$fsc->show_numero($value->dtopor)}%{/if}
       </td>
-      <td class="text-right">{$fsc->show_precio($value->pvptotal, $fsc->albaran->coddivisa)}</td>
+      <td class="text-right">{$fsc->show_precio($value->pvptotal, $fsc->presupuesto->coddivisa)}</td>
    </tr>
    {/loop}
 </table>
 
-{if="$fsc->albaran->observaciones"}
-<h4>Observaciones:</h4>
-<p>{$fsc->albaran->observaciones}</p>
+{if="$fsc->presupuesto->observaciones"}
+<b>Observaciones:</b>
+{$fsc->presupuesto->observaciones}
+<br/>
 {/if}
-
+<br/><br/>
 <table class="table table-condensed">
    <thead>
       <tr>
@@ -74,15 +75,20 @@
       </tr>
    </thead>
    <tr>
-      <td>{$fsc->albaran->codpago}</td>
-      <td class="text-right">{$fsc->show_precio($fsc->albaran->neto, $fsc->albaran->coddivisa)}</td>
-      <td class="text-right">{$fsc->show_precio($fsc->albaran->totaliva, $fsc->albaran->coddivisa)}</td>
-      <td class="text-right">{$fsc->show_precio($fsc->albaran->total, $fsc->albaran->coddivisa)}</td>
+      <td>{$fsc->presupuesto->codpago}</td>
+      <td class="text-right">{$fsc->show_precio($fsc->presupuesto->neto, $fsc->presupuesto->coddivisa)}</td>
+      <td class="text-right">{$fsc->show_precio($fsc->presupuesto->totaliva, $fsc->presupuesto->coddivisa)}</td>
+      <td class="text-right">{$fsc->show_precio($fsc->presupuesto->total, $fsc->presupuesto->coddivisa)}</td>
    </tr>
 </table>
-
+<br/>
+{if="$fsc->presupuesto->finoferta"}
+&nbsp;<b>{#FS_PRESUPUESTO#} válido hasta:</b> {$fsc->presupuesto->finoferta}
+<br/>
+{/if} 
+             
 {else}
-<div class="alert alert-danger">Albarán no encontrado.</div>
+<div class="alert alert-danger">Presupuesto no encontrado.</div>
 {/if}
 
 {include="footer2"}
